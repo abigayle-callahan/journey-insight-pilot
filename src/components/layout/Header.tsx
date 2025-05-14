@@ -15,7 +15,7 @@ export const Header = () => {
         <div className="flex items-center">
           <h1 className="text-xl font-semibold text-gray-800">
             <Link to="/">
-              <span className="text-epsilon-blue">Epsilon</span> Journey Orchestration
+              <span className="text-epsilon-blue">Epsilon</span>
             </Link>
           </h1>
         </div>

@@ -5,11 +5,13 @@ import {
   MessageCircle, 
   FileText, 
   Settings,
+  BarChart
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navItems = [
   { icon: LayoutGrid, label: 'Campaigns', path: '/' },
+  { icon: BarChart, label: 'Simulations', path: '/simulations' },
   { icon: MessageCircle, label: 'Messages', path: '/messages' },
   { icon: FileText, label: 'Content', path: '/content' },
   { icon: Settings, label: 'Settings', path: '/settings' },
