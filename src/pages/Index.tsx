@@ -1,12 +1,41 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useState, useEffect } from 'react';
+import { JourneyToolbar } from '@/components/journey/JourneyToolbar';
+import { JourneyCanvas } from '@/components/journey/JourneyCanvas';
+import { ResultsDrawer } from '@/components/simulation/ResultsDrawer';
+import { useSimulationStore } from '@/stores/simulationStore';
+import { toast } from 'sonner';
 
 const Index = () => {
+  const { activeSimulation, completedSimulation, setActiveSimulation, markNotificationAsRead } = useSimulationStore();
+  const [isResultsDrawerOpen, setIsResultsDrawerOpen] = useState(false);
+  
+  // Watch for completed simulations and show notification
+  useEffect(() => {
+    if (completedSimulation) {
+      toast.success('Simulation complete!', {
+        description: 'View the results to see insights.',
+        action: {
+          label: 'View Results',
+          onClick: () => {
+            setIsResultsDrawerOpen(true);
+            markNotificationAsRead(completedSimulation.id);
+          }
+        }
+      });
+    }
+  }, [completedSimulation, markNotificationAsRead]);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="flex flex-col h-full">
+      <JourneyToolbar />
+      <JourneyCanvas />
+      
+      <ResultsDrawer 
+        open={isResultsDrawerOpen} 
+        onOpenChange={setIsResultsDrawerOpen}
+        result={completedSimulation}
+      />
     </div>
   );
 };
