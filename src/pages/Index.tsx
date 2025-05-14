@@ -2,13 +2,12 @@
 import { useState, useEffect } from 'react';
 import { JourneyToolbar } from '@/components/journey/JourneyToolbar';
 import { JourneyCanvas } from '@/components/journey/JourneyCanvas';
-import { ResultsDrawer } from '@/components/simulation/ResultsDrawer';
+import { SimulationStatusBanner } from '@/components/journey/SimulationStatusBanner';
 import { useSimulationStore } from '@/stores/simulationStore';
 import { toast } from 'sonner';
 
 const Index = () => {
-  const { activeSimulation, completedSimulation, setActiveSimulation, markNotificationAsRead } = useSimulationStore();
-  const [isResultsDrawerOpen, setIsResultsDrawerOpen] = useState(false);
+  const { activeSimulation, completedSimulation, markNotificationAsRead } = useSimulationStore();
   
   // Watch for completed simulations and show notification
   useEffect(() => {
@@ -18,7 +17,7 @@ const Index = () => {
         action: {
           label: 'View Results',
           onClick: () => {
-            setIsResultsDrawerOpen(true);
+            // The results button is now available in the toolbar
             markNotificationAsRead(completedSimulation.id);
           }
         }
@@ -29,13 +28,8 @@ const Index = () => {
   return (
     <div className="flex flex-col h-full">
       <JourneyToolbar />
+      <SimulationStatusBanner />
       <JourneyCanvas />
-      
-      <ResultsDrawer 
-        open={isResultsDrawerOpen} 
-        onOpenChange={setIsResultsDrawerOpen}
-        result={completedSimulation}
-      />
     </div>
   );
 };

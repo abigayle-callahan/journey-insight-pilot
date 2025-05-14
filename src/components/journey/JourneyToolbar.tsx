@@ -1,18 +1,27 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { BarChart, Loader } from 'lucide-react';
+import { BarChart, Loader, FileText } from 'lucide-react';
 import { useSimulationStore } from '@/stores/simulationStore';
 import { SimulateDrawer } from '../simulation/SimulateDrawer';
+import { ResultsDrawer } from '../simulation/ResultsDrawer';
 
 export const JourneyToolbar = () => {
-  const { activeSimulation, startSimulation } = useSimulationStore();
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const { activeSimulation, completedSimulation, markNotificationAsRead } = useSimulationStore();
+  const [isSimulateDrawerOpen, setIsSimulateDrawerOpen] = useState(false);
+  const [isResultsDrawerOpen, setIsResultsDrawerOpen] = useState(false);
   
   const isSimulationRunning = activeSimulation?.status === 'running';
   
   const handleSimulate = () => {
-    setIsDrawerOpen(true);
+    setIsSimulateDrawerOpen(true);
+  };
+
+  const handleViewResults = () => {
+    setIsResultsDrawerOpen(true);
+    if (completedSimulation) {
+      markNotificationAsRead(completedSimulation.id);
+    }
   };
 
   return (
@@ -36,6 +45,17 @@ export const JourneyToolbar = () => {
           Publish
         </Button>
         
+        {completedSimulation && (
+          <Button
+            variant="outline"
+            onClick={handleViewResults}
+            className="mr-2 text-epsilon-blue border-epsilon-blue hover:bg-epsilon-light-blue"
+          >
+            <FileText className="mr-2 h-4 w-4" />
+            View Simulation Results
+          </Button>
+        )}
+        
         <Button
           onClick={handleSimulate}
           disabled={isSimulationRunning}
@@ -56,8 +76,14 @@ export const JourneyToolbar = () => {
       </div>
       
       <SimulateDrawer 
-        open={isDrawerOpen} 
-        onOpenChange={setIsDrawerOpen} 
+        open={isSimulateDrawerOpen} 
+        onOpenChange={setIsSimulateDrawerOpen} 
+      />
+      
+      <ResultsDrawer 
+        open={isResultsDrawerOpen} 
+        onOpenChange={setIsResultsDrawerOpen}
+        result={completedSimulation}
       />
     </div>
   );

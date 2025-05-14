@@ -13,7 +13,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Progress } from '@/components/ui/progress';
 import { useSimulationStore } from '@/stores/simulationStore';
 import { SimulationResult } from '@/types/simulation';
-import { FileText, BarChart, Users, Lightbulb, Calendar } from 'lucide-react';
+import { FileText, BarChart, Users, Lightbulb, Calendar, Cpu, Check, ArrowRight } from 'lucide-react';
+import { toast } from '@/components/ui/use-toast';
 
 export const ResultsDrawer = ({ 
   open, 
@@ -26,6 +27,14 @@ export const ResultsDrawer = ({
 }) => {
   if (!result) return null;
 
+  const handleApplyRecommendation = (recommendation: string) => {
+    // In a real implementation, this would apply the recommendation to the journey
+    toast({
+      title: "Recommendation Applied",
+      description: `The recommendation "${recommendation}" has been applied to your journey.`,
+    });
+  };
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="sm:max-w-xl overflow-y-auto">
@@ -37,10 +46,11 @@ export const ResultsDrawer = ({
         </SheetHeader>
         
         <Tabs defaultValue="summary" className="mt-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="summary">Summary</TabsTrigger>
             <TabsTrigger value="audience">Audience</TabsTrigger>
             <TabsTrigger value="recommendations">Insights</TabsTrigger>
+            <TabsTrigger value="technology">Technology</TabsTrigger>
             <TabsTrigger value="details">Details</TabsTrigger>
           </TabsList>
           
@@ -186,11 +196,80 @@ export const ResultsDrawer = ({
                   <div key={index} className="border-l-4 border-epsilon-blue pl-4 py-1">
                     <p className="font-medium">{recommendation.title}</p>
                     <p className="text-sm text-gray-600 mt-1">{recommendation.description}</p>
-                    <p className="text-xs text-epsilon-blue mt-1">
-                      {recommendation.impact} impact · {recommendation.effort} effort
-                    </p>
+                    <div className="flex justify-between items-center mt-2">
+                      <p className="text-xs text-epsilon-blue">
+                        {recommendation.impact} impact · {recommendation.effort} effort
+                      </p>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="text-epsilon-blue border-epsilon-blue hover:bg-epsilon-light-blue"
+                        onClick={() => handleApplyRecommendation(recommendation.title)}
+                      >
+                        <Check className="mr-1 h-3 w-3" />
+                        Apply Change
+                      </Button>
+                    </div>
                   </div>
                 ))}
+              </CardContent>
+            </Card>
+          </TabsContent>
+          
+          <TabsContent value="technology" className="space-y-4 mt-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Cpu className="h-4 w-4 mr-2" />
+                  How the Intent Loop Simulator Works
+                </CardTitle>
+                <CardDescription>
+                  Understanding the technology behind your simulation results
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="bg-epsilon-light-blue p-4 rounded-md space-y-3">
+                  <div>
+                    <h4 className="font-medium">1. Behavioral Models</h4>
+                    <p className="text-sm text-gray-600 mt-1">
+                      The simulator creates predictive models based on historical customer data, including response patterns, 
+                      engagement metrics, and conversion behaviors across different segments.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h4 className="font-medium">2. Synthetic Agents</h4>
+                    <p className="text-sm text-gray-600 mt-1">
+                      For each audience segment, we generate thousands of virtual customers (agents) that simulate real-world
+                      behaviors. These agents have unique attributes and decision patterns based on your historical data.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h4 className="font-medium">3. Journey Traversal</h4>
+                    <p className="text-sm text-gray-600 mt-1">
+                      Each synthetic agent navigates through your journey based on the defined path, making decisions at 
+                      each step that mirror real customer behavior, including opening emails, clicking links, 
+                      abandoning journeys, or converting.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h4 className="font-medium">4. Machine Learning Analysis</h4>
+                    <p className="text-sm text-gray-600 mt-1">
+                      After simulation, our ML algorithms analyze the aggregate data to identify patterns, bottlenecks, 
+                      and opportunities for improvement, generating actionable recommendations with predicted impact.
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex justify-end">
+                  <Button variant="ghost" size="sm" className="text-epsilon-blue" asChild>
+                    <a href="#" className="flex items-center">
+                      Learn more about our technology <ArrowRight className="ml-1 h-3 w-3" />
+                    </a>
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
