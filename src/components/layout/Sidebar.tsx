@@ -2,18 +2,16 @@
 import { Link, useLocation } from 'react-router-dom';
 import { 
   LayoutGrid, 
-  Users, 
+  MessageCircle, 
   FileText, 
-  BarChart, 
   Settings,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navItems = [
-  { icon: LayoutGrid, label: 'Journey Builder', path: '/' },
-  { icon: Users, label: 'Audiences', path: '/audiences' },
+  { icon: LayoutGrid, label: 'Campaigns', path: '/' },
+  { icon: MessageCircle, label: 'Messages', path: '/messages' },
   { icon: FileText, label: 'Content', path: '/content' },
-  { icon: BarChart, label: 'Simulations', path: '/simulations' },
   { icon: Settings, label: 'Settings', path: '/settings' },
 ];
 

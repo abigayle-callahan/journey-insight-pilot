@@ -22,6 +22,9 @@ const App = () => (
           <Route element={<MainLayout />}>
             <Route path="/" element={<Index />} />
             <Route path="/simulations" element={<SimulationHistoryPage />} />
+            <Route path="/messages" element={<Index />} /> {/* Placeholder - would be replaced with real page */}
+            <Route path="/content" element={<Index />} /> {/* Placeholder - would be replaced with real page */}
+            <Route path="/settings" element={<Index />} /> {/* Placeholder - would be replaced with real page */}
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -13,7 +13,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Progress } from '@/components/ui/progress';
 import { useSimulationStore } from '@/stores/simulationStore';
 import { SimulationResult } from '@/types/simulation';
-import { FileText, BarChart, Users, Lightbulb, Calendar, Cpu, Check, ArrowRight } from 'lucide-react';
+import { FileText, BarChart, Users, Lightbulb, Calendar, Cpu, Check, ArrowRight, DollarSign } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 
 export const ResultsDrawer = ({ 
@@ -120,6 +120,36 @@ export const ResultsDrawer = ({
             
             <Card>
               <CardHeader>
+                <CardTitle className="text-base">Additional Metrics</CardTitle>
+                <CardDescription>Silver Tier Upgrade Campaign specific metrics</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-medium">Opt-Out Risk (SMS)</h4>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-full">
+                        <Progress value={18} className="h-2" />
+                      </div>
+                      <span className="text-sm font-medium">18%</span>
+                    </div>
+                    <p className="text-xs text-gray-500">3% lower than benchmark</p>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-medium">Expected ROI Uplift</h4>
+                    <div className="flex items-center">
+                      <DollarSign className="h-5 w-5 text-epsilon-green" />
+                      <span className="text-lg font-bold text-epsilon-green">2.4x</span>
+                    </div>
+                    <p className="text-xs text-gray-500">Based on historical conversion data</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardHeader>
                 <CardTitle className="text-base">Performance by Channel</CardTitle>
                 <CardDescription>Predicted engagement across channels</CardDescription>
               </CardHeader>
@@ -176,6 +206,50 @@ export const ResultsDrawer = ({
                     </div>
                   </div>
                 ))}
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Optimal Channel Timing</CardTitle>
+                <CardDescription>Recommended send times for each segment</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <h4 className="text-sm font-medium">Gen Z Members</h4>
+                  <div className="grid grid-cols-3 gap-2 text-sm">
+                    <div className="bg-gray-50 p-2 rounded">
+                      <p className="text-xs text-gray-500">Email</p>
+                      <p className="font-medium">Evening (6-8 PM)</p>
+                    </div>
+                    <div className="bg-gray-50 p-2 rounded">
+                      <p className="text-xs text-gray-500">Push</p>
+                      <p className="font-medium">Late Evening (9-11 PM)</p>
+                    </div>
+                    <div className="bg-gray-50 p-2 rounded">
+                      <p className="text-xs text-gray-500">SMS</p>
+                      <p className="font-medium">Afternoon (2-4 PM)</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <h4 className="text-sm font-medium">Non-Gen Z Members</h4>
+                  <div className="grid grid-cols-3 gap-2 text-sm">
+                    <div className="bg-gray-50 p-2 rounded">
+                      <p className="text-xs text-gray-500">Email</p>
+                      <p className="font-medium">Morning (8-10 AM)</p>
+                    </div>
+                    <div className="bg-gray-50 p-2 rounded">
+                      <p className="text-xs text-gray-500">Push</p>
+                      <p className="font-medium">Afternoon (1-3 PM)</p>
+                    </div>
+                    <div className="bg-gray-50 p-2 rounded">
+                      <p className="text-xs text-gray-500">SMS</p>
+                      <p className="font-medium">Morning (10-12 PM)</p>
+                    </div>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
@@ -288,6 +362,10 @@ export const ResultsDrawer = ({
               <CardContent className="space-y-3">
                 <div className="grid grid-cols-2 gap-x-4 gap-y-2">
                   <div>
+                    <p className="text-sm text-gray-500">Campaign Name</p>
+                    <p className="font-medium">Silver Tier Upgrade Campaign</p>
+                  </div>
+                  <div>
                     <p className="text-sm text-gray-500">Journey Version</p>
                     <p className="font-medium">v{result.journeyVersion}</p>
                   </div>
@@ -318,8 +396,50 @@ export const ResultsDrawer = ({
                   <div>
                     <p className="text-sm text-gray-500">Total Audience</p>
                     <p className="font-medium">
-                      {result.audienceSize.toLocaleString()} profiles
+                      {result.audienceSize.toLocaleString()} members
                     </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Included Assets</CardTitle>
+                <CardDescription>Content and audiences used in this simulation</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="text-sm font-medium mb-2">Audience Segments</h4>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="bg-gray-50 p-2 rounded text-sm">
+                        <p className="font-medium">Mid-Tier Members</p>
+                        <p className="text-xs text-gray-500">12,500 members</p>
+                      </div>
+                      <div className="bg-gray-50 p-2 rounded text-sm">
+                        <p className="font-medium">Near Silver Qualification</p>
+                        <p className="text-xs text-gray-500">4,800 members</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-sm font-medium mb-2">Content Assets</h4>
+                    <div className="grid grid-cols-1 gap-2">
+                      <div className="bg-gray-50 p-2 rounded text-sm">
+                        <p className="font-medium">"Almost Silver" Email</p>
+                        <p className="text-xs text-gray-500">ID: EMAIL-ST-001</p>
+                      </div>
+                      <div className="bg-gray-50 p-2 rounded text-sm">
+                        <p className="font-medium">"Silver Status" Push Notification</p>
+                        <p className="text-xs text-gray-500">ID: PUSH-ST-002</p>
+                      </div>
+                      <div className="bg-gray-50 p-2 rounded text-sm">
+                        <p className="font-medium">"2 Purchases Away" SMS</p>
+                        <p className="text-xs text-gray-500">ID: SMS-ST-003</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </CardContent>

@@ -26,7 +26,7 @@ export const JourneyToolbar = () => {
 
   return (
     <div className="border-b border-gray-200 bg-white p-4 flex items-center justify-between">
-      <h2 className="text-lg font-semibold text-gray-800">Summer Campaign Journey</h2>
+      <h2 className="text-lg font-semibold text-gray-800">Silver Tier Upgrade Campaign</h2>
       
       <div className="flex items-center space-x-2">
         <Button
